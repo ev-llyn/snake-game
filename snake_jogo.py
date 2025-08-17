@@ -6,9 +6,17 @@ import sys
 pygame.init()
 pygame.display.set_caption("Jogo Snake Python")
 
-# Tela
-largura, altura = 1200, 800
-tela = pygame.display.set_mode((largura, altura))
+# Parâmetros
+tamanho_quadrado = 20
+velocidade_jogo = 15
+
+# Pega resolução da tela e ajusta para múltiplos de tamanho_quadrado
+info = pygame.display.Info()
+largura = (info.current_w // tamanho_quadrado) * tamanho_quadrado
+altura = (info.current_h // tamanho_quadrado) * tamanho_quadrado
+
+# Tela fullscreen
+tela = pygame.display.set_mode((largura, altura), pygame.FULLSCREEN)
 relogio = pygame.time.Clock()
 
 # Cores
@@ -17,14 +25,10 @@ branca = (255, 255, 255)
 vermelha = (255, 0, 0)
 verde = (0, 255, 0)
 
-# Parâmetros
-tamanho_quadrado = 20
-velocidade_jogo = 15
-
 # Funções
 def gerar_comida():
-    comida_x = round(random.randrange(0, largura - tamanho_quadrado) / tamanho_quadrado) * tamanho_quadrado
-    comida_y = round(random.randrange(0, altura - tamanho_quadrado) / tamanho_quadrado) * tamanho_quadrado
+    comida_x = random.randrange(0, largura, tamanho_quadrado)
+    comida_y = random.randrange(0, altura, tamanho_quadrado)
     return comida_x, comida_y
 
 def desenhar_comida(tamanho, comida_x, comida_y):
